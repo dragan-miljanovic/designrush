@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @vite('resources/js/main.js')
+    <title>Service Provider Directory</title>
+
+    <!-- Preconnect to assets -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+</head>
+<body>
+<div id="app"></div>
+</body>
+</html>
