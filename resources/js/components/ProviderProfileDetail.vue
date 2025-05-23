@@ -34,7 +34,7 @@ export default {
         const id = this.$route.params.id;
         try {
             const res = await axios.get(`/api/providers/${id}`);
-            this.provider = res.data;
+            this.provider = res.data.data;
         } catch (e) {
             this.error = 'Failed to load provider data.';
             console.error(e);

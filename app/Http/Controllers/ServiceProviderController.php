@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ServiceProviderResource;
 use App\Models\ServiceProvider;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Throwable;
 
 class ServiceProviderController extends Controller
 {
-    public function index(Request $request): LengthAwarePaginator
+    public function index(Request $request): AnonymousResourceCollection
     {
         $query = ServiceProvider::with('category');
 
@@ -16,11 +19,14 @@ class ServiceProviderController extends Controller
             $query->where('category_id', $request->category_id);
         }
 
-        return $query->paginate(12);
+        return ServiceProviderResource::collection($query->paginate(12));
     }
 
-    public function show(ServiceProvider $serviceProvider): ServiceProvider
+    /**
+     * @throws Throwable
+     */
+    public function show(ServiceProvider $serviceProvider): JsonResource
     {
-        return $serviceProvider->load('category');
+        return $serviceProvider->load('category')->toResource();
     }
 }

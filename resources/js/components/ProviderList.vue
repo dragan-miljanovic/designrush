@@ -48,13 +48,13 @@ export default {
                 },
             });
 
-            this.providers = res.data.data || res.data; // adapt based on response
-            this.page = res.data.current_page || 1;
-            this.lastPage = res.data.last_page || 1;
+            this.providers = res.data.data;
+            this.page = res.data.meta.current_page || 1;
+            this.lastPage = res.data.meta.last_page || 1;
         },
         async fetchCategories() {
             const res = await axios.get('/api/categories');
-            this.categories = res.data;
+            this.categories = res.data.data;
         },
     },
 };
