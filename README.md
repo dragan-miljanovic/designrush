@@ -1,61 +1,102 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ⚡️ Laravel + Vue 3 Provider App
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project is a single-page application built using **Laravel (API)** and **Vue 3 (frontend)**, optimized for performance with a focus on **Core Web Vitals**, especially **LCP (Largest Contentful Paint)** and **TTFB (Time To First Byte)**.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Performance Optimization Overview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### ✅ Frontend (Vue 3 + Vite)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+#### 1. **Image Loading Strategy**
+- **Lazy Load**: All provider logos use `loading="lazy"` to avoid loading offscreen images on initial render.
+- **Eager Load Above-the-Fold**: The first few provider cards (`index < 3`) use `loading="eager"` to prioritize LCP.
 
-## Learning Laravel
+```vue
+<img
+  :src="provider.logo_url"
+  alt="logo"
+  class="provider-logo"
+  :loading="index < 3 ? 'eager' : 'lazy'" />
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+#### 2. **Critical CSS**
+- Core layout and base styles (nav, grid, cards, typography) are included directly in `app.css`.
+- Tailwind CSS is configured to **purge unused styles**, keeping the final CSS minimal.
+- Vite compiles and injects only critical styles on first load.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+#### 3. **JavaScript Optimization**
+- Vite handles **code-splitting** and **minification**.
+- Page components are dynamically loaded using Vue Router:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```js
+const routes = [
+  {
+    path: '/providers',
+    component: () => import('./pages/Providers.vue'),
+  },
+];
+```
 
-## Laravel Sponsors
+- This defers the loading of large JS chunks until needed, improving initial load time.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+#### 4. **Paginated Content**
+- Providers are fetched in paginated chunks to limit DOM size and avoid LCP delays from rendering all cards at once.
 
-### Premium Partners
+#### 5. **Modern Build Tools**
+- `vite.config.js` is configured with `laravel-vite-plugin` and Vue plugin for optimal asset handling.
+- Asset versioning and preloading are managed automatically.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+### ✅ Backend (Laravel API)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### 1. **Optimized API Responses**
+- API returns only the required data for the current page.
+- Pagination is handled using Laravel’s built-in pagination methods.
 
-## Code of Conduct
+#### 2. **TTFB Improvements**
+- Laravel views are compiled and cached via `storage/framework/views`.
+- JSON API endpoints are lean, with no unnecessary database or logic overhead.
+- Laravel route and config caching (`php artisan route:cache`) can be enabled for further speedups.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### 3. **Vite Integration**
+- Assets are served efficiently using `@vite('resources/js/main.js')` and `@vite('resources/css/app.css')`.
+- Vite’s dev server offers hot module replacement in development and optimized output in production.
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 🧪 Metrics to Track
 
-## License
+Use Lighthouse or PageSpeed Insights to validate:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Metric                             | Target         |
+|------------------------------------|----------------|
+| **LCP (Largest Contentful Paint)** | ≤ 2.5 seconds  |
+| **TTFB (Time to First Byte)**      | ≤ 200 ms       |
+| **CLS (Cumulative Layout Shift)**  | < 0.1          |
+| **FCP (First Contentful Paint)**   | ≤ 1.8 seconds  |
+
+---
+
+## 🛠️ Dev Commands
+
+```bash
+# Install dependencies
+npm install
+composer install
+
+# Database migration with seeder
+sh checkall.sh
+
+# Run Vite (Dev)
+npm run dev
+
+# Run Laravel server
+php artisan serve
+
+# Build for production
+npm run build
+```
+
+---

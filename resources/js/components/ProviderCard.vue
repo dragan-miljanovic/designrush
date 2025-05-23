@@ -1,7 +1,7 @@
 <template>
     <router-link :to="`/providers/${provider.id}`">
         <div class="card">
-            <img :src="provider.logo_url" alt="logo" loading="lazy" />
+            <img :src="provider.logo_url" :loading="index < 3 ? 'eager' : 'lazy'"  />
             <h3>{{ provider.name }}</h3>
             <p>{{ truncatedDescription }}</p>
             <small>{{ provider.category.name }}</small>
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-    props: ['provider'],
+    props: ['provider', 'index'],
     computed: {
         truncatedDescription() {
             const desc = this.provider.description || '';

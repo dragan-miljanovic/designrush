@@ -8,7 +8,12 @@
         </select>
 
         <div class="grid">
-            <ProviderCard v-for="p in providers" :key="p.id" :provider="p" />
+            <ProviderCard
+                v-for="(p, index) in providers"
+                :key="p.id"
+                :provider="p"
+                :index="index"
+            />
         </div>
 
         <!-- Pagination Controls -->
