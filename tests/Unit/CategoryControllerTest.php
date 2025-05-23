@@ -18,6 +18,6 @@ class CategoryControllerTest extends TestCase
         $response = $this->getJson('/api/categories');
 
         $response->assertStatus(200)
-            ->assertJsonCount(5);
+            ->assertJsonCount(5, 'data');
     }
 }

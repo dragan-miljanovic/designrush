@@ -31,8 +31,10 @@ class ServiceProviderControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJson([
-                'id' => $provider->id,
-                'name' => $provider->name,
+                'data' => [
+                    'id' => $provider->id,
+                    'name' => $provider->name,
+                ]
             ]);
     }
 
@@ -41,6 +43,14 @@ class ServiceProviderControllerTest extends TestCase
     {
         $response = $this->getJson('/api/providers/999');
 
-        $response->assertStatus(404);
+        $response->assertStatus(422)
+            ->assertJson([
+                'message' => 'The selected service provider is invalid.',
+                'errors' => [
+                    "service_provider" => [
+                        0 => "The selected service provider is invalid."
+                    ]
+                ]
+            ]);
     }
 }

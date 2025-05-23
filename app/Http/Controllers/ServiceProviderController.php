@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\IndexServiceProviderRequest;
-use App\Http\Requests\ShowServiceProviderRequest;
+use App\Http\Requests\ServiceProvider\IndexServiceProviderRequest;
+use App\Http\Requests\ServiceProvider\ShowServiceProviderRequest;
 use App\Http\Resources\ServiceProviderResource;
 use App\Services\ServiceProvider\Contracts\ServiceProviderServiceInterface;
 use App\Utils\Contracts\LoggerInterface;
@@ -47,8 +47,7 @@ class ServiceProviderController extends Controller
      */
     public function show(ShowServiceProviderRequest $request): JsonResponse|ResourceJsonResponse
     {
-
-        $id = $request->get('service_provider');
+        $id = $request->input('service_provider');
 
         try {
             $serviceProvider = $this->serviceProviderService->find($id, ['category']);
