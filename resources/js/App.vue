@@ -1,9 +1,17 @@
+<!-- App.vue -->
 <template>
     <div>
-        <nav>
-            <router-link to="/">Home</router-link> |
-            <router-link to="/providers">Providers</router-link>
-        </nav>
+        <NavBar />
         <router-view />
     </div>
 </template>
+
+<script>
+import NavBar from './components/NavBar.vue'
+
+export default {
+    components: {
+        NavBar
+    }
+}
+</script>
