@@ -88,10 +88,6 @@ composer install
 
 # Database migration with seeder
 sh checkall.sh
-
-# Run Vite (Dev)
-npm run dev
-
 # Run Laravel server
 php artisan serve
 
