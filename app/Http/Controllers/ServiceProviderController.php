@@ -2,31 +2,62 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IndexServiceProviderRequest;
+use App\Http\Requests\ShowServiceProviderRequest;
 use App\Http\Resources\ServiceProviderResource;
-use App\Models\ServiceProvider;
-use Illuminate\Http\Request;
+use App\Services\ServiceProvider\Contracts\ServiceProviderServiceInterface;
+use App\Utils\Contracts\LoggerInterface;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\JsonResource as ResourceJsonResponse;
 use Throwable;
 
 class ServiceProviderController extends Controller
 {
-    public function index(Request $request): AnonymousResourceCollection
-    {
-        $query = ServiceProvider::with('category');
+    public function __construct(
+        private ServiceProviderServiceInterface $serviceProviderService,
+        private LoggerInterface $logger,
+    ){
+        //
+    }
 
-        if ($request->filled('category_id')) {
-            $query->where('category_id', $request->category_id);
+    public function index(IndexServiceProviderRequest $request): AnonymousResourceCollection|JsonResponse
+    {
+        $pagination = 12;
+        $filters = [];
+
+        if ($request->has('category_id') && !empty($request->get('category_id'))) {
+            $filters['category_id'] = $request->get('category_id');
         }
 
-        return ServiceProviderResource::collection($query->paginate(12));
+        try {
+            $providers = $this->serviceProviderService->findAllWithPagination($pagination, $filters);
+        } catch (Exception $e) {
+            $this->logger ->error('Error while getting providers: ', ['message' => $e]);
+
+            return response()->json(['message', 'Unexpected error, please try again later.'], 500);
+        }
+
+        return ServiceProviderResource::collection($providers);
     }
 
     /**
      * @throws Throwable
      */
-    public function show(ServiceProvider $serviceProvider): JsonResource
+    public function show(ShowServiceProviderRequest $request): JsonResponse|ResourceJsonResponse
     {
-        return $serviceProvider->load('category')->toResource();
+
+        $id = $request->get('service_provider');
+
+        try {
+            $serviceProvider = $this->serviceProviderService->find($id, ['category']);
+        } catch (Exception $e) {
+            $this->logger ->error('Error while getting single call charge: ', ['message' => $e]);
+
+            return response()->json(['message', 'Unexpected error, please try again later.'], 500);
+        }
+
+        return $serviceProvider->toResource();
     }
 }
