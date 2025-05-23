@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
 </head>
-<body>
+<body class="m-0 font-sans bg-[#f9f9f9] text-[#333]">
 <div id="app"></div>
 </body>
 </html>
