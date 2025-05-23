@@ -1,22 +1,32 @@
 <template>
-    <div class="profile-wrapper">
-        <div class="profile-sidebar">
-            <button @click="$router.back()" class="back-button">← Back</button>
+    <div class="max-w-5xl mx-auto px-4 py-8">
+        <!-- Sidebar / Back Button -->
+        <div class="mb-6">
+            <button
+                @click="$router.back()"
+                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-gray-700 hover:bg-gray-800 rounded-md transition"
+            >
+                ← Back
+            </button>
         </div>
 
-        <div v-if="provider" class="profile">
+        <!-- Provider Profile -->
+        <div v-if="provider" class="bg-white shadow rounded-lg p-6 space-y-4">
             <img
                 :src="provider.logo_url"
                 alt="logo"
                 loading="lazy"
-                class="profile-logo"
+                class="w-24 h-24 rounded-full object-cover border border-gray-300"
             />
-            <h1>{{ provider.name }}</h1>
-            <p>{{ provider.description }}</p>
-            <p><strong>Category:</strong> {{ provider.category_name}}</p>
+            <h1 class="text-2xl font-bold text-gray-900">{{ provider.name }}</h1>
+            <p class="text-gray-700 leading-relaxed">{{ provider.description }}</p>
+            <p class="text-sm text-gray-600">
+                <strong class="font-semibold">Category:</strong> {{ provider.category_name }}
+            </p>
         </div>
 
-        <div v-else class="loading">Loading provider info...</div>
+        <!-- Loading State -->
+        <div v-else class="text-gray-500 italic">Loading provider info...</div>
     </div>
 </template>
 
