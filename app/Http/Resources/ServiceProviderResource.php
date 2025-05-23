@@ -19,7 +19,7 @@ class ServiceProviderResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'logo_url' => $this->logo_url,
-            'category' => $this->category
+            'category_name' => $this->category->name,
         ];
     }
 }

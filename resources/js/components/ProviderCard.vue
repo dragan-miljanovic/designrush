@@ -4,7 +4,7 @@
             <img :src="provider.logo_url" :loading="index < 3 ? 'eager' : 'lazy'"  />
             <h3>{{ provider.name }}</h3>
             <p>{{ truncatedDescription }}</p>
-            <small>{{ provider.category.name }}</small>
+            <small>{{ provider.category_name }}</small>
         </div>
     </router-link>
 </template>
