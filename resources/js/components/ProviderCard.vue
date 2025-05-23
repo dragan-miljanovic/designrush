@@ -1,7 +1,7 @@
 <template>
     <router-link :to="`/providers/${provider.id}`">
         <div class="card">
-            <img :src="provider.logo_url" :loading="index < 3 ? 'eager' : 'lazy'"  />
+            <img alt="logo" :src="provider.logo_url" :loading="index < 3 ? 'eager' : 'lazy'"  />
             <h3>{{ provider.name }}</h3>
             <p>{{ truncatedDescription }}</p>
             <small>{{ provider.category_name }}</small>

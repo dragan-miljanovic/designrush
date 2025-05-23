@@ -3,18 +3,22 @@ import { createRouter, createWebHistory } from 'vue-router';
 import App from './App.vue';
 import '../css/app.css';
 
+const ProviderProfile = () => import('./pages/ProviderProfile.vue');
+const Providers = () => import('./pages/Providers.vue');
+const Home = () =>  import('./pages/Home.vue');
+
 const routes = [
     {
         path: '/',
-        component: () => import('./pages/Home.vue'),
+        component: Home,
     },
     {
         path: '/providers',
-        component: () => import('./pages/Providers.vue'),
+        component: Providers,
     },
     {
         path: '/providers/:id',
-        component: () => import('./pages/ProviderProfile.vue'),
+        component: ProviderProfile,
     },
 ];
 
