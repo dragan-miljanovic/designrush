@@ -1,16 +1,15 @@
+<!-- resources/views/app.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @vite(['resources/css/app.css', 'resources/js/main.js'])
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Find and explore service providers easily in our comprehensive directory.">
     <title>Service Provider Directory</title>
 
-    <!-- Preconnect to assets -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
+    @vite(['resources/css/app.css', 'resources/js/main.js'])
 </head>
-<body class="m-0 font-sans bg-[#f9f9f9] text-[#333]">
+<body>
 <div id="app"></div>
 </body>
 </html>
