@@ -14,7 +14,7 @@ class ServiceProviderSeeder extends Seeder
     public function run(): void
     {
         Category::factory(5)->create()->each(function ($category) {
-            ServiceProvider::factory(4)->create([
+            ServiceProvider::factory(40)->create([
                 'category_id' => $category->id,
             ]);
         });
