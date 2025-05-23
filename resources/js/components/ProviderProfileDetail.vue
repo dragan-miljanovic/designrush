@@ -13,7 +13,7 @@
             />
             <h1>{{ provider.name }}</h1>
             <p>{{ provider.description }}</p>
-            <p><strong>Category:</strong> {{ provider.category.name }}</p>
+            <p><strong>Category:</strong> {{ provider.category_name}}</p>
         </div>
 
         <div v-else class="loading">Loading provider info...</div>
