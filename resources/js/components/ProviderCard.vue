@@ -26,6 +26,15 @@ export default {
     props: {
         provider: Object,
     },
+    computed: {
+        truncatedDescription() {
+            const desc = this.provider.description || '';
+            if (desc.length > 100) {
+                return desc.substring(0, 100) + '...';
+            }
+            return desc;
+        }
+    },
     methods: {
         goToDetail() {
             this.$router.push({

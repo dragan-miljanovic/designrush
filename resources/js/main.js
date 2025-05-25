@@ -2,6 +2,9 @@ import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import App from './App.vue';
 import '../css/app.css';
+import axios from 'axios'
+axios.defaults.baseURL = 'http://127.0.0.1:8000';
+axios.defaults.withCredentials = true;
 
 const ProviderProfile = () => import('./pages/ProviderProfile.vue');
 const Providers = () => import('./pages/Providers.vue');
