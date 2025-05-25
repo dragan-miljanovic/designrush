@@ -21,7 +21,7 @@ This project is a single-page application built using **Laravel (API)** and **Vu
 ```
 
 #### 2. **Critical CSS**
-- Core layout and base styles (nav, grid, cards, typography) are included directly in `app.css`.
+- Core layout and base styles could be included directly in `app.css`.
 - Tailwind CSS is configured to **purge unused styles**, keeping the final CSS minimal.
 - Vite compiles and injects only critical styles on first load.
 
