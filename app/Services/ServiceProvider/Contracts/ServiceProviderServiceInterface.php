@@ -9,5 +9,5 @@ interface ServiceProviderServiceInterface
 {
     public function find(int $id, array $relations = null): ServiceProvider;
 
-    public function findAllWithPagination(int $number, array $filters = null): LengthAwarePaginator;
+    public function findAllWithPagination(int $number, int $page, array $filters = null): LengthAwarePaginator;
 }

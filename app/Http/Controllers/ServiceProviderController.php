@@ -24,6 +24,7 @@ class ServiceProviderController extends Controller
 
     public function index(IndexServiceProviderRequest $request): AnonymousResourceCollection|JsonResponse
     {
+        $page = $request->input('page', 1);
         $pagination = 12;
         $filters = [];
 
@@ -32,7 +33,7 @@ class ServiceProviderController extends Controller
         }
 
         try {
-            $providers = $this->serviceProviderService->findAllWithPagination($pagination, $filters);
+            $providers = $this->serviceProviderService->findAllWithPagination($pagination, $page, $filters);
         } catch (Exception $e) {
             $this->logger ->error('Error while getting providers: ', ['message' => $e]);
 

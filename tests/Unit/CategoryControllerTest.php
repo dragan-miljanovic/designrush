@@ -11,7 +11,7 @@ class CategoryControllerTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_returns_all_categories()
+    public function it_returns_all_categories(): void
     {
         Category::factory()->count(5)->create();
 
