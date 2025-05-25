@@ -58,15 +58,28 @@ export default {
         };
     },
     mounted() {
+        this.selectedCategory = this.$route.query.category_id || '';
+        this.page = parseInt(this.$route.query.page) || 1;
+
         this.fetchCategories();
-        this.fetchProviders();
+        this.fetchProviders(this.page);
     },
     methods: {
         async fetchProviders(page = 1) {
+            this.page = page;
+
+            // Update URL query params
+            this.$router.replace({
+                query: {
+                    category_id: this.selectedCategory || undefined,
+                    page: this.page !== 1 ? this.page : undefined,
+                },
+            });
+
             const res = await axios.get('/api/providers', {
                 params: {
                     category_id: this.selectedCategory,
-                    page: page,
+                    page: this.page,
                 },
             });
 

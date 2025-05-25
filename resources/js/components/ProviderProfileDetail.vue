@@ -2,12 +2,14 @@
     <div class="max-w-5xl mx-auto px-4 py-8">
         <!-- Sidebar / Back Button -->
         <div class="mb-6">
+            <!-- Back Button -->
             <button
-                @click="$router.back()"
+                @click="goBackWithQuery"
                 class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-gray-700 hover:bg-gray-800 rounded-md transition"
             >
                 ← Back
             </button>
+
         </div>
 
         <!-- Provider Profile -->
@@ -39,6 +41,12 @@ export default {
             provider: null,
             error: null,
         };
+    },
+    methods: {
+        goBackWithQuery() {
+            const query = this.$route.query;
+            this.$router.push({ name: 'provider-list', query });
+        },
     },
     async created() {
         const id = this.$route.params.id;

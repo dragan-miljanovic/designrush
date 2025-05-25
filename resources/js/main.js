@@ -14,10 +14,12 @@ const routes = [
     },
     {
         path: '/providers',
+        name: 'provider-list',
         component: Providers,
     },
     {
         path: '/providers/:id',
+        name: 'provider-detail',
         component: ProviderProfile,
     },
 ];

@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="`/providers/${provider.id}`" class="block group">
+    <div @click="goToDetail" class="cursor-pointer hover:shadow-lg transition">
         <div class="bg-white rounded-lg shadow p-4 hover:shadow-md transition">
             <img
                 :src="provider.logo_url"
@@ -17,21 +17,23 @@
                 {{ provider.category_name }}
             </small>
         </div>
-    </router-link>
+    </div>
 </template>
 
 
 <script>
 export default {
-    props: ['provider', 'index'],
-    computed: {
-        truncatedDescription() {
-            const desc = this.provider.description || '';
-            if (desc.length > 100) {
-                return desc.substring(0, 100) + '...';
-            }
-            return desc;
-        }
-    }
+    props: {
+        provider: Object,
+    },
+    methods: {
+        goToDetail() {
+            this.$router.push({
+                name: 'provider-detail',
+                params: { id: this.provider.id },
+                query: this.$route.query, // 👈 carry the filters
+            });
+        },
+    },
 };
 </script>
