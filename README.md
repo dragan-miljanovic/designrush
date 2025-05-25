@@ -59,6 +59,7 @@ const routes = [
 - Laravel views are compiled and cached via `storage/framework/views`.
 - JSON API endpoints are lean, with no unnecessary database or logic overhead.
 - Laravel route and config caching (`php artisan route:cache`) can be enabled for further speedups.
+- Caching strategy is implemented using Laravel’s cache system to reduce redundant database queries and speed up frequent responses.
 
 #### 3. **Vite Integration**
 - Assets are served efficiently using `@vite('resources/js/main.js')` and `@vite('resources/css/app.css')`.
